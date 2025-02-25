@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Welcome User</h1>
+    <p class="lead">Please choose an option:</p>
+    <p>
+        <a href="@Url.Action("RedirectToRegister", "Home")" class="btn btn-primary btn-lg">Register</a>
+        <a href="@Url.Action("RedirectToLogin", "Home")" class="btn btn-success btn-lg">Login</a>
+    </p>
+</div>

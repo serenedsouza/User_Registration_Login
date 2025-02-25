@@ -1,0 +1,106 @@
+﻿@model WebApplication1.Models.User
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+    <style>
+        .profile-picture-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: auto;
+        }
+
+        .profile-picture {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .edit-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .profile-picture-container:hover .edit-overlay {
+            display: flex;
+        }
+
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+            .navbar a {
+                float: left;
+                display: block;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+                .navbar a:hover {
+                    background: #ddd;
+                    color: black;
+                }
+
+            .navbar .profile-img {
+                float: right;
+                display: block;
+                padding: 5px;
+            }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="@Url.Action("EditUser", "Account")">Edit User Details</a>
+        <a href="@Url.Action("EditProfilePicture", "Account")">Edit Profile Picture</a>
+        <a href="@Url.Action("Logout", "Account")">Logout</a>
+        <div class="profile-img">
+            <img src="@Url.Content(Model.Img)" alt="Profile Picture" class="profile-picture" style="width: 40px; height: 40px; border-radius: 50%;" />
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 60px;">
+        <h2>Welcome, @Model.UserName</h2>
+        <div class="profile-picture-container">
+            <img src="@Url.Content(Model.Img)" alt="Profile Picture" class="profile-picture" />
+            <div class="edit-overlay" onclick="location.href='@Url.Action("EditProfilePicture", "Account")'">Edit</div>
+        </div>
+        <h3>Your Details:</h3>
+        <table class="table">
+            <tr>
+                <th>Username</th>
+                <td>@Model.UserName</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <th>Mobile</th>
+                <td>@Model.Mobile</td>
+            </tr>
+            <!-- Add more user details as needed -->
+        </table>
+    </div>
+</body>
+</html>

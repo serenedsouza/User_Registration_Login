@@ -1,0 +1,68 @@
+﻿@using WebApplication1.Models
+@model WebApplication1.Models.AdminDashboardViewModel
+
+@{
+    ViewBag.Title = "Admin Dashboard";
+}
+
+
+<div class="container mt-4">
+    <h2>Admin Dashboard</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Profile Image</th>
+                <th>@Html.DisplayNameFor(model => model.Users.First().UserName)</th>
+                <th>@Html.DisplayNameFor(model => model.Users.First().Email)</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Users)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Img))
+                        {
+                            <img src="@Url.Content(item.Img)" alt="Profile Image" class="rounded-circle" style="width: 50px; height: 50px;" />
+                        }
+                        else
+                        {
+                            <span>No Image</span>
+                        }
+                    </td>
+                    <td>@item.UserName</td>
+                    <td>@item.Email</td>
+                    <td>@(item.IsActive ? "Active" : "Inactive")</td>
+                    <td>
+                        @using (Html.BeginForm("ToggleUserStatus", "Account", FormMethod.Post))
+                        {
+                            @Html.HiddenFor(modelItem => item.ID)
+                            if (item.IsActive)
+                            {
+                                <button type="submit" class="btn btn-danger">Deactivate</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-success">Activate</button>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="@(i == Model.CurrentPage ? "active" : "")">
+                    @Html.ActionLink(i.ToString(), "AdminDashboard", new { page = i })
+                </li>
+            }
+        </ul>
+    </div>
+</div>
